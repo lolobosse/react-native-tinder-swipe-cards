@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'transparent',
+    backgroundColor: '#eee',
   },
   yup: {
     borderColor: 'green',
@@ -80,7 +80,9 @@ export default class SwipeCards extends Component {
     renderCard: React.PropTypes.func,
     cardRemoved: React.PropTypes.func,
     dragY: React.PropTypes.bool,
-    smoothTransition: React.PropTypes.bool
+    smoothTransition: React.PropTypes.bool,
+    offsetX: React.PropTypes.number,
+    offsetY: React.PropTypes.number
   };
 
   static defaultProps = {
@@ -103,7 +105,9 @@ export default class SwipeCards extends Component {
     renderCard: (card) => null,
     style: styles.container,
     dragY: true,
-    smoothTransition: false
+    smoothTransition: false,
+    offsetX: 0,
+    offsetY: 0
   };
 
   constructor(props) {
@@ -115,7 +119,7 @@ export default class SwipeCards extends Component {
 
     this.state = {
       pan: new Animated.ValueXY(0),
-      enter: new Animated.Value(0.5),
+      enter: new Animated.Value(10),
       cards: [].concat(this.props.cards),
       card: this.props.cards[currentIndex[this.guid]],
     };
@@ -336,10 +340,10 @@ export default class SwipeCards extends Component {
 
     return cards.map((card, i) => {
 
-      let offsetX = this.props.stackOffsetX * cards.length - i * this.props.stackOffsetX;
+      let offsetX = this.props.offsetX;
       let lastOffsetX = offsetX + this.props.stackOffsetX;
 
-      let offsetY = this.props.stackOffsetY * cards.length - i * this.props.stackOffsetY;
+      let offsetY = this.props.offsetY + this.props.stackOffsetY * cards.length - i * this.props.stackOffsetY;
       let lastOffsetY = offsetY + this.props.stackOffsetY;
 
       let opacity = 0.25 + (0.75 / cards.length) * (i + 1);
@@ -348,11 +352,11 @@ export default class SwipeCards extends Component {
       let scale = 0.85 + (0.15 / cards.length) * (i + 1);
       let lastScale = 0.85 + (0.15 / cards.length) * i;
 
+
       let style = {
         position: 'absolute',
         top: this.state.enter.interpolate({ inputRange: [0, 1], outputRange: [lastOffsetY, offsetY] }),
         left: this.state.enter.interpolate({ inputRange: [0, 1], outputRange: [lastOffsetX, offsetX] }),
-        opacity: this.props.smoothTransition ? 1 : this.state.enter.interpolate({ inputRange: [0, 1], outputRange: [lastOpacity, opacity] }),
         transform: [{ scale: this.state.enter.interpolate({ inputRange: [0, 1], outputRange: [lastScale, scale] }) }],
         elevation: i * 10
       };
@@ -379,7 +383,6 @@ export default class SwipeCards extends Component {
           {this.props.renderCard(this.state.card)}
         </Animated.View>;
       }
-
       return <Animated.View key={card[this.props.cardKey]} style={style}>{this.props.renderCard(card)}</Animated.View>;
     });
   }
