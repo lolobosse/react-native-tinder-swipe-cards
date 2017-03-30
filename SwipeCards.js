@@ -274,6 +274,7 @@ export default class SwipeCards extends Component {
         this.cardAnimation = null;
       }
     );
+    this.setState({isLike: false});
     this.props.cardRemoved(currentIndex[this.guid]);
   }
 
@@ -300,6 +301,7 @@ export default class SwipeCards extends Component {
         this.cardAnimation = null;
       }
     );
+    this.setState({isLike: true});
     this.props.cardRemoved(currentIndex[this.guid]);
   }
 
