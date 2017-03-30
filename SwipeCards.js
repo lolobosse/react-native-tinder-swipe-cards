@@ -496,6 +496,8 @@ export default class SwipeCards extends Component {
     let cardOpacity = {opacity: this.state.pan.x.interpolate({inputRange: [-80, -20, 0, 20, 80], outputRange: [0.9, 0, 0, 0, 0.9]})};
     let dimensionStyle = {
       backgroundColor: '#fff',
+      borderWidth: 1,
+      borderColor: '#ddd',
       width: this.props.cardWidth,
       height: this.props.cardHeight,
       position: 'absolute'
