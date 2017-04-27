@@ -276,6 +276,7 @@ export default class SwipeCards extends Component {
     );
     this.setState({isLike: false});
     this.props.cardRemoved(currentIndex[this.guid]);
+    this.props.handleNope(this.state.card)
   }
 
   _forceUpSwipe() {
@@ -303,6 +304,7 @@ export default class SwipeCards extends Component {
     );
     this.setState({isLike: true});
     this.props.cardRemoved(currentIndex[this.guid]);
+    this.props.handleYup(this.state.card)
   }
 
   _goToNextCard() {
@@ -380,7 +382,7 @@ export default class SwipeCards extends Component {
     this.state.pan.setValue({x: 0, y: 0});
     this.state.enter.setValue(0);
     this._animateEntrance();
-    this._goToNextCard();
+    // this._goToNextCard();
   }
 
   /**
