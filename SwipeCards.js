@@ -151,6 +151,8 @@ export default class SwipeCards extends Component {
     this.guid = this.props.guid || guid++;
     if (!currentIndex[this.guid]) currentIndex[this.guid] = 0;
 
+    console.log(this.props.cards);
+
     this.state = {
       pan: new Animated.ValueXY(0),
       enter: new Animated.Value(0.5),
@@ -519,8 +521,9 @@ export default class SwipeCards extends Component {
   }
 
   render() {
+    console.log(this.props.cards.map((c) => c.title.substring(0, 10)));
     return (
-      <View style={[{width: this.props.containerWidth}, styles.container]}>
+      <View style={[{ width: this.props.containerWidth }, styles.container]}>
         {this.props.stack ? this.renderStack() : this.renderCard()}
       </View>
     )
