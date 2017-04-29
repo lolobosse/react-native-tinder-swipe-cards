@@ -265,9 +265,20 @@ export default class SwipeCards extends Component {
   }
 
   _forceLeftSwipe() {
-    this.cardAnimation = Animated.timing(this.state.pan, {
-      toValue: {x: -500, y: 0},
-    }).start(status => {
+    // this.cardAnimation = Animated.timing(this.state.pan, {
+    //   toValue: {x: -500, y: 0},
+    // }).start(status => {
+    //     if (status.finished) this._advanceState();
+    //     else this._resetState();
+
+    //     this.cardAnimation = null;
+    //   }
+    // );
+    this.cardAnimation = Animated.decay(this.state.pan, {
+      velocity: {x: 1, y: 0},
+      deceleration: 0.98
+    });
+    this.cardAnimation.start(status => {
         if (status.finished) this._advanceState();
         else this._resetState();
 
@@ -293,9 +304,20 @@ export default class SwipeCards extends Component {
   }
 
   _forceRightSwipe() {
-    this.cardAnimation = Animated.timing(this.state.pan, {
-      toValue: {x: 500, y: 0},
-    }).start(status => {
+    // this.cardAnimation = Animated.timing(this.state.pan, {
+    //   toValue: {x: 500, y: 0},
+    // }).start(status => {
+    //     if (status.finished) this._advanceState();
+    //     else this._resetState();
+
+    //     this.cardAnimation = null;
+    //   }
+    // );
+    this.cardAnimation = Animated.decay(this.state.pan, {
+      velocity: {x: 1, y: 0},
+      deceleration: 0.98
+    });
+    this.cardAnimation.start(status => {
         if (status.finished) this._advanceState();
         else this._resetState();
 
